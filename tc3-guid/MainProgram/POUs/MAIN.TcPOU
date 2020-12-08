@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+  <POU Name="MAIN" Id="{dd60aeb8-b539-4862-864e-f793c1299126}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	trigger : BOOL := TRUE;
+	createGuid : FB_CreateGuid;
+	guid : GUID;
+	guidAsString : STRING;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF NOT createGuid.bBusy AND trigger THEN	
+	
+	trigger := FALSE;
+	createGuid(bExecute := FALSE);	
+	createGuid(
+			bExecute := TRUE,
+			pGuidBuffer := ADR(guid),
+			nGuidBufferSize := SIZEOF(guid));
+			
+ELSIF createGuid.bBusy THEN
+	
+	createGuid();	
+	
+END_IF
+
+// The code abover this point does not require any further libraries.  
+// ------------------------------------------------------------------
+// The code below requires Tc2_Utilites
+
+guidAsString := GUID_TO_STRING(guid);]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="43" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="13" Count="1" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="56" Count="2" />
+      <LineId Id="33" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
